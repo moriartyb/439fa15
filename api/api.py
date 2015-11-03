@@ -14,6 +14,11 @@ def index_route():
 @app.route('/graph', methods=["POST"])
 def graph():
     most_recent_point = request.form['point']
+
+    print '----------'
+    print most_recent_point
+    print '----------'
+
     return jsonify(**{
             'status': 'okay'
         })
