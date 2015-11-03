@@ -1,0 +1,22 @@
+{
+  "name": "LiveGraph",
+  "main": "index.js",
+  "version": "0.0.0",
+  "authors": [
+    "bladechapman <bechapm2@illinois.edu>"
+  ],
+  "description": "Update graph in real time",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "c3": "~0.4.10",
+    "d3": "~3.5.6"
+  }
+}
