@@ -13,16 +13,16 @@ def index_route():
 
 @app.route('/graph', methods=["POST"])
 def graph():
-    most_recent_point = request.form['point']
+    most_recent_point = int(request.form['point'])
     return jsonify(**{
             'status': 'okay'
         })
 
 @app.route('/point', methods=["GET"])
 def point():
-    random_number = random.randint(0, 100)
+    # random_number = random.randint(0, 100)
     return jsonify(**{
-            'data': random_number
+            'data': most_recent_point
         })
 
 if __name__ == '__main__':
