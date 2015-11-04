@@ -43,6 +43,9 @@ $(document).ready(function() {
     function update_data(new_data_point, target_index) {
         var length_diff = target_index - data_points.length;
         data_points.extend(length_diff);
+
+        console.log(new_data_point);
+
         data_points[target_index] = new_data_point;
         chart.load({ columns: [data_points] });
     }
