@@ -15,7 +15,6 @@ def index_route():
 def graph():
     global most_recent_point
     most_recent_point = int(request.form['point'])
-    print most_recent_point
     return jsonify(**{
             'status': 'okay'
         })
