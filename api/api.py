@@ -1,5 +1,4 @@
 from flask import *
-from flask import request
 from flask_socketio import SocketIO, emit
 from time import sleep
 import random
@@ -18,7 +17,7 @@ def graph():
     global most_recent_point
     most_recent_point = int(request.form['point'])
 
-    emit('new_data', most_recent_point)
+    socketio.emit('new_data', most_recent_point)
 
     return jsonify(**{
             'status': 'okay'
