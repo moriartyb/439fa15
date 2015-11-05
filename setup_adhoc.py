@@ -16,7 +16,8 @@ def initialize_adhoc(**kwargs):
     os.system('iwconfig %s key 1234567890' % interface)
     os.system('ip link set %s up' % interface)
     os.system('ip addr flush dev %s' % interface)
-    os.system('ip addr add %s dev %s; iwconfig' % (ip, interface))
+    os.system('ip addr add %s dev %s' % (ip, interface))
+    print 'done!'
 
 if __name__ == '__main__':
     arguments = sys.argv[1:]
