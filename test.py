@@ -21,7 +21,7 @@ while True:
         start = line.find("Signal level=") + len("Signal level=")
         end = line.find("dBm") - 1
         print line[start:end]
-	# post(a.readline().strip('. \t \n \r'))
+	post(line[start:end])
 	
 
 
