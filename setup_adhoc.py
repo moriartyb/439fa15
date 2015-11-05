@@ -13,5 +13,5 @@ def initialize(essid='hoc', interface='wlp1s0', ip='92.168.9.9/16', channel='4')
     os.system('ip addr add %s dev %s', (sip, interface))
     os.system('iwconfig')
 
-if __name__ == '__main__'
+if __name__ == '__main__':
     scriptline.run()
