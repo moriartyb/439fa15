@@ -9,6 +9,7 @@ def initialize_adhoc(**kwargs):
     essid = kwargs['essid'] if 'essid' in kwargs else 'hoc'
     ip = kwargs['ip'] if 'ip' in kwargs else '192.168.9.9/16'
 
+    os.system('rfkill unblock all')
     os.system('ip link set %s down' % interface)
     os.system('iwconfig %s mode ad-hoc' % interface)
     os.system('iwconfig %s channel %s' % (interface, channel))
