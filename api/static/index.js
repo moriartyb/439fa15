@@ -33,7 +33,6 @@ $(document).ready(function() {
     })();
 
     socket.on('new_data', function(data) {
-        console.log('socketdata\n' + data);
         update_data(data, index_counter);
         index_counter += 1;
     });
