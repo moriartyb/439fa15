@@ -1,9 +1,10 @@
 from flask import *
-from flask import request
+from flask_socketio import SocketIO, emit
 from time import sleep
 import random
 
 app = Flask(__name__, static_path="")
+socketio = SocketIO(app)
 
 most_recent_point = 0
 
@@ -15,16 +16,13 @@ def index_route():
 def graph():
     global most_recent_point
     most_recent_point = int(request.form['point'])
+
+    emit('new_data', most_recent_point)
+
     return jsonify(**{
             'status': 'okay'
         })
 
-@app.route('/point', methods=["GET"])
-def point():
-    global most_recent_point
-    return jsonify(**{
-            'data': most_recent_point
-        })
-
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+    socketio.run(app, host='0.0.0.0', debug=True)
+    # app.run(host='0.0.0.0', debug=True)

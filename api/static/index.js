@@ -2,6 +2,7 @@ $(document).ready(function() {
     var chart;
     var data_points = ['RSSI'];
     var index_counter = 1;
+    var socket = io();
 
     (function init_chart() {
         chart = c3.generate({
@@ -31,14 +32,11 @@ $(document).ready(function() {
         });
     })();
 
-    function update_chart() {
-        var latest_index = index_counter;
-        var data_request = $.ajax({ url: '/point' });
-        data_request.done(function(response) {
-            update_data(response['data'], latest_index);
-        });
+    socket.on('new_data', function(data) {
+        console.log('socketdata\n' + data);
+        update_data(data, index_counter);
         index_counter += 1;
-    }
+    });
 
     function update_data(new_data_point, target_index) {
         var length_diff = target_index - data_points.length;
@@ -47,10 +45,6 @@ $(document).ready(function() {
         data_points[target_index] = new_data_point;
         chart.load({ columns: [data_points] });
     }
-
-    setInterval(function() {
-        update_chart();
-    }, 1000);
 });
 
 Array.prototype.extend = function(extend_amount) {
