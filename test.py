@@ -2,6 +2,7 @@ import subprocess
 import os
 import httplib
 import urllib
+import linecache
 cmd="cat /proc/net/wireless | tail -n 1 | awk '{print $4}'"
 def post(val):
         conn = httplib.HTTPConnection("bladeismyna.me", 5000)
@@ -14,9 +15,9 @@ def post(val):
 while True:
 	os.system("iwlist wlp1s0 scan | sed -ne \'s#^[[:space:]]*\\(Quality=\\|Encryption key:\\|ESSID:\\)#\\1#p\' -e \'s#^[[:space:]]*\\(Mode:.*\\)$#\\1\\n#p\' | grep -B 2 hoc | grep -vE \'hoc|Encryption\' > data.txt")
 	a = open("data.txt", "r")
-        while line = a.readline() == '':
+        while linecache.getline("data.txt", 1) == '':
                 pass
-        print line
+        print linecache.getline("data.txt", 1)
 	# post(a.readline().strip('. \t \n \r'))
 	# a.seek(0)
 
