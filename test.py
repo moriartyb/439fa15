@@ -17,7 +17,10 @@ while True:
         while a.readline() == '':
                 a.seek(0)
         a.seek(0)
-        print a.readline()
+        line = a.readline()
+        start = line.find("Signal level=") + len("Signal level=")
+        end = line.find("dBm") - 1
+        print line[start:end]
 	# post(a.readline().strip('. \t \n \r'))
 	
 
