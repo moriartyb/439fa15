@@ -3,7 +3,7 @@
 import sys
 import os
 
-def initialize(**kwargs):
+def initialize_adhoc(**kwargs):
     interface = kwargs['interface'] if 'interface' in kwargs else 'wlp1s0'
     channel = kwargs['channel'] if 'channel' in kwargs else '4'
     essid = kwargs['essid'] if 'essid' in kwargs else 'hoc'
@@ -26,4 +26,4 @@ if __name__ == '__main__':
     for i in range(0, len(keys)):
         kwargs[keys[i]] = values[i]
 
-    initialize(kwargs)
+    initialize_adhoc(**kwargs)
