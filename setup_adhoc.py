@@ -1,17 +1,29 @@
 #!/usr/bin/env python
 
 import sys
-import scriptline
+import os
 
-def initialize(essid='hoc', interface='wlp1s0', ip='92.168.9.9/16', channel='4'):
+def initialize(**kwargs):
+    interface = kwargs['interface'] if 'interface' in kwargs else 'wlp1s0'
+    channel = kwargs['channel'] if 'channel' in kwargs else '4'
+    essid = kwargs['essid'] if 'essid' in kwargs else 'hoc'
+    ip = kwargs['ip'] if 'ip' in kwargs else '192.168.9.9/16'
+
     os.system('ip link set %s down' % interface)
     os.system('iwconfig %s mode ad-hoc' % interface)
     os.system('iwconfig %s channel %s' % (interface, channel))
     os.system("iwconfig %s essid '%s'" % (interface, essid))
     os.system('iwconfig %s key 1234567890' %interface)
     os.system('ip link set %s up' % interface)
-    os.system('ip addr add %s dev %s', (sip, interface))
+    os.system('ip addr add %s dev %s', (ip, interface))
     os.system('iwconfig')
 
 if __name__ == '__main__':
-    scriptline.run()
+    arguments = sys.argv[1:]
+    keys = arguments[::2]
+    values = arguments[1::2]
+    kwargs = {}
+    for i in range(0, len(keys)):
+        kwargs[keys[i]] = values[i]
+
+    initialize(kwargs)
