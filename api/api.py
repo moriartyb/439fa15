@@ -1,4 +1,5 @@
 from flask import *
+from flask import request
 from flask_socketio import SocketIO, emit
 from time import sleep
 import random
