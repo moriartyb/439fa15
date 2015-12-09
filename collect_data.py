@@ -17,4 +17,4 @@ while True:
     print "%d: %s" % (iteration, line[start:end])
     data_pool.write(line[start:end] + '\n')
 
-    iteration++
+    iteration += 1
