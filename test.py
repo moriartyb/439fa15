@@ -22,6 +22,6 @@ while True:
         end = line.find("dBm") - 1
         print line[start:end]
 	post(line[start:end])
-	
+
 
 
