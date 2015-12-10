@@ -16,8 +16,9 @@ def index_route():
 def graph():
     global most_recent_point
     most_recent_point = int(request.form['point'])
+    mac_addr = request.form['mac']
 
-    socketio.emit('new_data', most_recent_point)
+    socketio.emit('new_data', [most_recent_point, mac_addr])
 
     return jsonify(**{
             'status': 'okay'
