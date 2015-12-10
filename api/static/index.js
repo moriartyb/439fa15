@@ -75,22 +75,23 @@ $(document).ready(function() {
         rssi_chart.load({ columns: column_rssi_data });
 
         var distance_dict = generate_range_data(data_dict);
-        var column_distance_data = flatten_points_dict(distance_dict);
-        distance_chart.load({columns: column_distance_data});
+	var column_distance_data = flatten_points_dict(distance_dict);
+	distance_chart.load({columns: column_distance_data});
     }
 
     function generate_range_data(rssi_dict) {
         var ret = {}
         for (var key in rssi_dict) {
             var rssi_data = rssi_dict[key];
-            var mac_addr = rssi_data[0];
-            var rssi_vals = rssi_data.splice(1);
+            var mac_addr = key
+            var rssi_vals = rssi_data.slice(1);
 
             ret[mac_addr] = [mac_addr];
 
-            for (var i in rssi_vals.length) {
-                ret[mac_addr].push(compute_range(rssi_vals[i]));
+            for (var i = 0; i <= rssi_vals.length; i++) {
+		ret[mac_addr].push(compute_range(rssi_vals[i]));
             }
+
         }
 
         return ret;
@@ -106,8 +107,8 @@ $(document).ready(function() {
     }
 
     function compute_range(rssi_value) {
-        var A = parseFloat($('#one_meter').value())
-        var n = parseFloat($('#n_value').value())
+        var A = parseFloat($('#one_meter').val())
+        var n = parseFloat($('#n_value').val())
 
         var div = -((rssi_value - A) / (10 * n));
         var d = Math.pow(10, div);
