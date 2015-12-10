@@ -50,7 +50,7 @@ $(document).ready(function() {
     function flatten_points_dict(dict) {
         var ret = [];
         for (var key in dict) {
-            ret.append(dict[key]);
+            ret.push(dict[key]);
         }
 
         return ret;
