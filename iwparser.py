@@ -4,9 +4,9 @@ import csv
 import sqlite3
 import os
 
-def post(val):
+def post(val, mac):
         conn = httplib.HTTPConnection("bladeismyna.me", 5000)
-        params = urllib.urlencode({'point': val})
+        params = urllib.urlencode({'point': val, 'mac': mac})
         headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
         conn.request("POST", "/graph", params, headers)
         response = conn.getresponse()
@@ -44,7 +44,7 @@ for line in data:
             wr = csv.writer(f)
             wr.writerow([current_mac,int(current_signal.split(' ')[0]), t])
             c.execute("INSERT INTO rssi VALUES ('{0}', '{1}', '{2}')".format(current_mac,int(current_signal.split(' ')[0]), t))
-        post(current_signal)
+        post(current_signal, current_mac)
         current_mac = None
         current_signal = None
 conn.commit()
