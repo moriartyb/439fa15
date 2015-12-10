@@ -20,6 +20,6 @@ while(1):
         with open('latlong.csv') as f:
             wr = csv.writer(f)
             wr.writerow([data['lat'], data['long'], data['time']])
-            c.execute("INSERT INTO rssi VALUES ('{0}', '{1}', '{2}')".format(data['lat'],data['long'], data['time']))
+            c.execute("INSERT INTO gps VALUES ('{0}', '{1}', '{2}')".format(data['lat'],data['long'], data['time']))
 conn.commit()
 conn.close()
