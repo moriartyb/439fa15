@@ -30,10 +30,10 @@ $(document).ready(function() {
     })();
 
     socket.on('new_data', function(data) {
-        update_data(data, index_counter);
+        update_data(data);
     });
 
-    function update_data(new_data_point, target_index) {
+    function update_data(new_data_point) {
         var signal_strength = new_data_point[0];
         var mac_addr = new_data_point[1];
 
