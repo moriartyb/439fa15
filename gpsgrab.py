@@ -2,22 +2,22 @@ import sys
 import ast
 import csv
 import json
+import sqlite3
 
 print "Waiting for GPS data ..."
+conn = sqlite3.connect('439.db')
+c = conn.cursor()
+c.execute('''CREATE TABLE IF NOT EXISTS gps (lat real, long real, timestamp real)''')
+
 while(1):
-#    print "getting new line"
     line=sys.stdin.readline()
     if not line:
         exit()
-#    print "got new line"
 
-    line=line.strip()
-    line=line.split("\t")
-    if line[0] == "Station":
-        current_mac = line[1]
-    if line[0] == "signal":
-        current_signal = line[1]
-
-    with open('latlong.csv') as f:
-        wr = csv.writer(f)
-        wr.writerow(current_mac,current_signal)
+    data = json.loads(line)
+    print data
+    if data.get('lat',None):
+        with open('latlong.csv') as f:
+            wr = csv.writer(f)
+            wr.writerow([data['lat'], data['long'], data['time']])
+            c.execute("INSERT INTO rssi VALUES ('{0}', '{1}', '{2}')".format(data['lat'],data['long'], data['time']))

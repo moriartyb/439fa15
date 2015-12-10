@@ -6,7 +6,9 @@ import os
 import httplib
 import urllib
 
-RSSI_CSV_FILE = os.environ.get('RSSI_CSV_FILE','rssi.csv')
+RSSI_CSV_FILE = os.environ.get('RSSI_CSV_FILE')
+if not RSSI_CSV_FILE:
+    RSSI_CSV_FILE = 'rssi.csv'
 POST = os.environ.get('POST')
 
 def post(val, mac):
