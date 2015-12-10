@@ -1,6 +1,13 @@
 #!/usr/bin/python2
 import sys
 import csv
+import sqlite3
+import os
+
+conn = sqlite3.connect('rssi.db')
+c = conn.cursor()
+c.execute('''CREATE TABLE IF NOT EXISTS rssi (mac text, rssi real, timestamp real)''')
+
 current_mac = None
 current_signal = None
 from time import time
@@ -28,5 +35,8 @@ for line in data:
         with open('rssi.csv', 'a') as f:
             wr = csv.writer(f)
             wr.writerow([current_mac,int(current_signal.split(' ')[0]), t])
+            c.execute("INSERT INTO rssi VALUES ('{0}', '{1}', '{2}')".format(current_mac,int(current_signal.split(' ')[0]), t))
         current_mac = None
         current_signal = None
+conn.commit()
+conn.close()
