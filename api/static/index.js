@@ -7,7 +7,7 @@ $(document).ready(function() {
         chart = c3.generate({
             bindto: '#chart',
             data: {
-                []
+                columns: []
             },
             axis: {
                 y: {
@@ -44,7 +44,7 @@ $(document).ready(function() {
         }
 
         var column_data = flatten_points_dict(data_dict);
-        chart.load({ data: column_data });
+        chart.load({ columns: column_data });
     }
 
     function flatten_points_dict(dict) {
