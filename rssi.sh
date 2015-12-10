@@ -6,7 +6,6 @@ do
   iw dev wlp1s0 station dump | /home/root/439fa15/iwparser.py
 
   if [ -n "$DELAY" ]
->>>>>>> Stashed changes
     then
       sleep $DELAY
   fi
