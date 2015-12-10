@@ -106,7 +106,10 @@ $(document).ready(function() {
     }
 
     function compute_range(rssi_value) {
-        var div = -((rssi - A) / (10 * n));
+        var A = parseFloat($('#one_meter').value())
+        var n = parseFloat($('#n_value').value())
+
+        var div = -((rssi_value - A) / (10 * n));
         var d = Math.pow(10, div);
 
         return d;
