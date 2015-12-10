@@ -1,26 +1,22 @@
 $(document).ready(function() {
     var chart;
-    var data_points = ['RSSI'];
-    var index_counter = 1;
+    var data_dict = {}
     var socket = io();
 
     (function init_chart() {
         chart = c3.generate({
             bindto: '#chart',
             data: {
-                columns: [
-                    data_points,
-                ]
             },
             axis: {
                 y: {
                     label: {
-                        text: 'Signal strength',
+                        text: 'Signal strength (RSSI)',
                         position: 'middle-left'
                     }
                 },
                 x: {
-                    label: 'Time in seconds',
+                    label: 'Timestamp',
                     tick: {
                         format: function(x) {
                             return Math.floor(x * 100) / 100;
@@ -34,27 +30,28 @@ $(document).ready(function() {
 
     socket.on('new_data', function(data) {
         update_data(data, index_counter);
-        index_counter += 1;
     });
 
     function update_data(new_data_point, target_index) {
-        var length_diff = target_index - data_points.length;
-        data_points.extend(length_diff);
+        var signal_strength = new_data_point[0];
+        var mac_addr = new_data_point[1];
 
-        data_points[target_index] = new_data_point;
-        chart.load({ columns: [data_points] });
+        if (mac_addr in data_dict) {
+            data_dict[mac_addr].push(signal_strength);
+        } else {
+            data_dict[mac_addr] = [mac_addr, signal_strength];
+        }
+
+        var column_data = flatten_points_dict(data_dict);
+        chart.load({ data: column_data });
+    }
+
+    function flatten_points_dict(dict) {
+        var ret = [];
+        for (var key in dict) {
+            ret.append(dict[key]);
+        }
+
+        return ret;
     }
 });
-
-Array.prototype.extend = function(extend_amount) {
-    if (extend_amount < 0)
-        return;
-
-    var old_length = this.length;
-    var new_length = old_length + extend_amount;
-
-    this.length = new_length;
-    for (var i = old_length; i < new_length; i++) {
-        this[i] = 0;
-    }
-}
