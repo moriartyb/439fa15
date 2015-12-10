@@ -1,0 +1,9 @@
+[Unit]
+Description=RSSI Logging Service
+
+[Service]
+Type=forking
+ExecStart=/home/root/439fa15/rssi.sh /var/log/rssi.csv 5
+
+[Install]
+WantedBy=multi-user.target

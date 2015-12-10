@@ -3,14 +3,7 @@ import sys
 import csv
 import sqlite3
 import os
-
-def post(val):
-        conn = httplib.HTTPConnection("bladeismyna.me", 5000)
-        params = urllib.urlencode({'point': val})
-        headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
-        conn.request("POST", "/graph", params, headers)
-        response = conn.getresponse()
-        print response.status, response.reason
+RSSI_CSV_FILE=os.environ.get('RSSI_CSV_FILE', 'rssi.csv')
 
 conn = sqlite3.connect('rssi.db')
 c = conn.cursor()
@@ -40,11 +33,10 @@ for line in data:
         current_signal = line[1]
 
     if current_mac and current_signal:
-        with open('rssi.csv', 'a') as f:
+        with open(RSSI_CSV_FILE, 'a') as f:
             wr = csv.writer(f)
             wr.writerow([current_mac,int(current_signal.split(' ')[0]), t])
             c.execute("INSERT INTO rssi VALUES ('{0}', '{1}', '{2}')".format(current_mac,int(current_signal.split(' ')[0]), t))
-        post(current_signal)
         current_mac = None
         current_signal = None
 conn.commit()
