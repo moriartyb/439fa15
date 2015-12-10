@@ -7,6 +7,7 @@ $(document).ready(function() {
         chart = c3.generate({
             bindto: '#chart',
             data: {
+                []
             },
             axis: {
                 y: {
