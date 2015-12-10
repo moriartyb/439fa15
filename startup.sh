@@ -9,4 +9,4 @@
 #     update-rc.d startup.sh defaults
 #   5. profit
 
-python /home/root/439fa15/setup_adhoc.py ip 192.168.3.1/24 # modify this on each galileo to be unique.
+python /home/root/439fa15/setup_adhoc.py ip 192.168.3.3 # modify this on each galileo to be unique.
